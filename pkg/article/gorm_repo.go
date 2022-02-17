@@ -2,6 +2,7 @@ package article
 
 import (
 	"context"
+	"fmt"
 	"gorm.io/gorm"
 	"helpstack/models"
 )
@@ -18,6 +19,7 @@ type ArticleRepository interface {
 	UpdateOne(ctx context.Context, article *Article) (int64, int64, error)
 	DeleteOne(ctx context.Context, id string) (int64, error)
 	CreateOne(ctx context.Context, article *Article) (*Article, error)
+	GetArticlesFunction(ctx context.Context) ([]Article, error)
 }
 
 // ArticleGormRepo implements the item.ItemRepository interface
@@ -63,5 +65,36 @@ func (u ArticleGormRepo) CreateOne(ctx context.Context, article *Article) (*Arti
 	return article, err
 }
 
+func (u ArticleGormRepo) GetArticlesFunction(ctx context.Context) ([]Article, error) {
+
+	var art []Article
+	err := u.conn.Raw("select get_all_articles()").Scan(&art)
+	fmt.Println("err", err)
+	if err!=nil {
+		return nil, nil
+	}
+	return art, nil
+}
+
+//func (u ArticleGormRepo) CountFunction(ctx context.Context) (int, error) {
+//
+//	var num int
+//	val := u.conn.Raw("select get_numberof_articles()").Scan(&num)
+//	fmt.Println("err", val)
+//	if val==nil {
+//		return val, errors.New("record not found")
+//	}
+//	return num, nil
+//}
 
 
+
+func (u ArticleGormRepo) CreateArticleFunction(ctx context.Context, article *Article) ([]Article, error) {
+
+	var art []Article
+	err := u.conn.Raw("select get_all_articles()").Scan(&art)
+	if err!=nil {
+		return nil, nil
+	}
+	return art, nil
+}

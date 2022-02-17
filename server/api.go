@@ -3,8 +3,8 @@ package server
 import (
 	"github.com/gofiber/fiber/v2"
 	"helpstack/config/database"
-	"helpstack/pkg/users"
 	"helpstack/pkg/article"
+	"helpstack/pkg/users"
 )
 
 func SetupApiRoutes(app *fiber.App, dbs dbPkg.Databases) {
@@ -28,9 +28,11 @@ func SetUserRoutes(route fiber.Router, usrH user.UserHandler) {
 
 func SetArticleRoutes(route fiber.Router, aH article.ArticleHandler) {
 	route.Get("/article", aH.GetMany)
+	route.Get("/articles", aH.GetFunction)
 	route.Get("/article/:id", aH.GetOne)
 	//route.Put("/article/:id", UpdateBook)
 	route.Post("/article", aH.CreateOne)
 	//route.Delete("/article/:id", DeleteBook)
 }
+
 

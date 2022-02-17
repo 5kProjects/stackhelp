@@ -57,5 +57,24 @@ func (uh *ArticleHandler) CreateOne(c *fiber.Ctx) error{
 
 }
 
+func (uh *ArticleHandler) GetFunction(c *fiber.Ctx) error{
+
+	art, err:=uh.UsrRepo.GetArticlesFunction(c.Context())
+	if err != nil {
+		return pkg.Unexpected(err.Error())
+	}
+	return c.JSON(art)
+
+}
+
+func (uh *ArticleHandler) CountFunction(c *fiber.Ctx) error{
+
+	art, err:=uh.UsrRepo.GetArticlesFunction(c.Context())
+	if err != nil {
+		return pkg.Unexpected(err.Error())
+	}
+	return c.JSON(art)
+
+}
 
 
